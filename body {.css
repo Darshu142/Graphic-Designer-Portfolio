@@ -1,0 +1,37 @@
+body {
+    background: black;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+
+.box {
+    margin: 20px;
+    padding: 50px;
+    background: #222;
+    border-radius: 10px;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: linear-gradient(135deg, #ff4d6d, #6a00f4);
+    color: white;
+}
+
+h1 {
+    margin-top: 50px;
+}
+
+.box {
+    margin: 30px auto;
+    width: 300px;
+    padding: 40px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.box:hover {
+    transform: scale(1.1);
+}
