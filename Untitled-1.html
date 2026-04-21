@@ -1,20 +1,588 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Darsha Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Darshana Deshpande — Graphic Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF8F4;
+    --sand: #E8DFD0;
+    --clay: #C9A882;
+    --terracotta: #A0673A;
+    --bark: #6B4226;
+    --charcoal: #2C2420;
+    --muted: #8A7968;
+    --light-muted: #B5A898;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,248,244,0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand);
+    padding: 0 6%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.07em;
+    color: var(--muted); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--terracotta); }
+
+  /* HAMBURGER (mobile) */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 1.5px;
+    background: var(--charcoal); transition: all 0.3s;
+  }
+  @media (max-width: 680px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    padding: 130px 6% 80px;
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--warm-white);
+    position: relative; overflow: hidden;
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--clay); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-label::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--clay);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 8.5vw, 108px);
+    font-weight: 300; line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--charcoal);
+    max-width: 820px;
+  }
+  .hero-title em { font-style: italic; color: var(--terracotta); }
+  .hero-sub {
+    margin-top: 2rem; max-width: 440px;
+    font-size: 15px; line-height: 1.85;
+    color: var(--muted);
+  }
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  }
+  .btn-primary {
+    display: inline-block; padding: 13px 28px;
+    background: var(--charcoal); color: var(--warm-white);
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer; border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--terracotta); }
+  .btn-ghost {
+    display: inline-block; padding: 13px 28px;
+    background: transparent; color: var(--charcoal);
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+    border: 1px solid var(--sand); text-decoration: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--clay); color: var(--terracotta); }
+
+  .hero-accent {
+    position: absolute; right: 6%; top: 50%; transform: translateY(-50%);
+    width: 260px; height: 360px;
+    background: var(--sand); opacity: 0.55; pointer-events: none;
+  }
+  .hero-accent-dot {
+    position: absolute; right: calc(6% + 140px); bottom: 120px;
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 1px solid var(--clay); opacity: 0.4; pointer-events: none;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 6%;
+    font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--light-muted); display: flex; align-items: center; gap: 8px;
+  }
+  .scroll-line {
+    display: block; width: 1px; height: 40px;
+    background: var(--light-muted); animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  /* SECTIONS common */
+  section { padding: 100px 6%; }
+  .section-label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--clay); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--clay);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 4.5vw, 50px);
+    font-weight: 300; line-height: 1.15;
+    color: var(--charcoal); margin-bottom: 1rem;
+  }
+
+  /* PORTFOLIO */
+  #portfolio { background: var(--cream); }
+  .portfolio-intro {
+    max-width: 500px; color: var(--muted);
+    font-size: 14px; line-height: 1.85; margin-bottom: 3rem;
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 2px;
+  }
+  .portfolio-item {
+    position: relative; overflow: hidden; cursor: pointer;
+    aspect-ratio: 4/3;
+  }
+  .portfolio-thumb {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.5s ease;
+  }
+  .portfolio-item:hover .portfolio-thumb { transform: scale(1.05); }
+  .portfolio-overlay {
+    position: absolute; inset: 0;
+    background: rgba(44,36,32,0.72);
+    display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: flex-end;
+    padding: 1.5rem; opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+  .portfolio-overlay h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400;
+    color: var(--warm-white); margin-bottom: 4px;
+  }
+  .portfolio-overlay span {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--clay);
+  }
+  .t1 { background: url("branding.png") center/cover no-repeat; }
+.t2 { background: url("visual.png") center/cover no-repeat; }
+.t3 { background: url("project1.jpg.png") center/cover no-repeat; }
+.t4 { background: url("retro.png") center/cover no-repeat; }
+.t5 { background: url("blue.png") center/cover no-repeat; }
+.t6 { background: url("typo.png") center/cover no-repeat; }
+  .thumb-inner {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; letter-spacing: 0.1em;
+    color: rgba(44,36,32,0.35); text-transform: uppercase;
+  }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 7rem; align-items: center;
+  }
+  .about-visual {
+  aspect-ratio: 3/4;
+  background: url("about me.png") center/cover no-repeat;
+  position: relative;
+}
+  .about-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.08);
+}
+  .about-visual-label {
+    position: absolute; bottom: -30px; right: 0;
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--light-muted);
+  }
+  .about-text .section-title { margin-bottom: 1.5rem; }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; line-height: 1.95; font-size: 14px; }
+  .about-edu {
+    margin-top: 1.8rem;
+    padding: 1.2rem 1.5rem;
+    border-left: 2px solid var(--clay);
+    background: var(--cream);
+  }
+  .about-edu-label {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--clay); margin-bottom: 6px;
+  }
+  .about-edu-name {
+    font-size: 14px; font-weight: 500; color: var(--charcoal); margin-bottom: 2px;
+  }
+  .about-edu-sub { font-size: 13px; color: var(--muted); }
+  .skills-row {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2rem;
+  }
+  .skill-tag {
+    padding: 6px 14px;
+    border: 1px solid var(--sand);
+    font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--bark);
+  }
+
+  /* SERVICES */
+  #services { background: var(--cream); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px; margin-top: 3rem;
+  }
+  .service-card {
+    background: var(--warm-white);
+    padding: 2rem 1.5rem;
+    border-top: 2px solid var(--clay);
+    transition: transform 0.25s;
+  }
+  .service-card:hover { transform: translateY(-5px); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 300;
+    color: var(--sand); margin-bottom: 1rem;
+  }
+  .service-name {
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.03em; color: var(--charcoal);
+    margin-bottom: 0.6rem;
+  }
+  .service-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+  /* EXPERIENCE */
+  #experience {}
+  .exp-list { margin-top: 3rem; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 2.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--sand);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-year {
+    font-size: 12px; letter-spacing: 0.07em;
+    color: var(--light-muted); padding-top: 5px;
+  }
+  .exp-role {
+    font-size: 15px; font-weight: 500;
+    color: var(--charcoal); margin-bottom: 4px;
+  }
+  .exp-company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; font-style: italic;
+    color: var(--terracotta); margin-bottom: 6px;
+  }
+  .exp-desc { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+  /* CONTACT */
+  #contact {
+    background: var(--charcoal); color: var(--warm-white);
+  }
+  #contact .section-label { color: var(--clay); }
+  #contact .section-label::before { background: var(--clay); }
+  #contact .section-title { color: var(--cream); margin-bottom: 0.5rem; }
+  .contact-intro { color: var(--light-muted); font-size: 14px; margin-bottom: 3rem; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+  }
+  .contact-text p {
+    color: var(--light-muted); line-height: 1.9;
+    font-size: 14px; margin-bottom: 2.5rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1.2rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; color: var(--light-muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .contact-link:hover { color: var(--clay); }
+  .contact-link-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    border: 1px solid rgba(181,168,152,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--clay);
+  }
+  .form-group { margin-bottom: 1.3rem; }
+  .form-group input, .form-group textarea {
+    width: 100%; background: rgba(255,255,255,0.04);
+    border: none; border-bottom: 1px solid rgba(181,168,152,0.2);
+    padding: 12px 0; font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--cream);
+    outline: none; transition: border-color 0.2s;
+    resize: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(181,168,152,0.35); }
+  .form-group input:focus, .form-group textarea:focus {
+    border-bottom-color: var(--clay);
+  }
+  .btn-send {
+    margin-top: 0.8rem; padding: 13px 32px;
+    background: var(--terracotta); color: var(--warm-white);
+    border: none; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.07em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-send:hover { background: var(--clay); }
+
+  /* FOOTER */
+  footer {
+    background: var(--charcoal);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  footer p { font-size: 12px; color: rgba(181,168,152,0.35); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    #about { grid-template-columns: 1fr; gap: 3.5rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.4rem; }
+    .hero-accent, .hero-accent-dot { display: none; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 5%; }
+    nav { padding: 0 5%; }
+  }
+</style>
 </head>
 <body>
 
-    <h1>Hi, I'm Darsha 👋</h1>
-    <p>Graphic Designer</p>
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Darshana Deshpande</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" onclick="this.classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-    <!-- ADD IMAGE HERE -->
-    <img src="project1.jpg" width="200">
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-label">Graphic Designer — India</div>
+  <h1 class="hero-title">Visuals that are<br><em>beautiful,</em><br>meaningful &amp; strategic.</h1>
+  <p class="hero-sub">Hi, I'm Darshana — a creative graphic designer with a strong eye for aesthetics, branding, and visual storytelling. I craft designs that don't just look good — they say something.</p>
+  <div class="hero-cta">
+    <a href="#portfolio" class="btn-primary">View My Work</a>
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+  </div>
+  <div class="hero-accent"></div>
+  <div class="hero-accent-dot"></div>
+  <div class="hero-scroll">
+    <span class="scroll-line"></span>
+    Scroll
+  </div>
+</section>
 
-    <div class="box">My Work 1</div>
-    <div class="box">My Work 2</div>
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-label">Selected Work</div>
+  <h2 class="section-title">Projects</h2>
+  <p class="portfolio-intro">A collection of social media creatives, brand work, poster design, and digital campaigns — each built with intention and care.</p>
+  <div class="portfolio-grid">
+    <div class="portfolio-item">
+      <div class="portfolio-thumb t1"><span class="thumb-inner">Social Media</span></div>
+      <div class="portfolio-overlay"><h3>Brand Social Kit</h3><span>Social Media Creatives</span></div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-thumb t2"><span class="thumb-inner">Branding</span></div>
+      <div class="portfolio-overlay"><h3>Visual Identity</h3><span>Digital Branding</span></div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-thumb t3"><span class="thumb-inner">Carousel</span></div>
+      <div class="portfolio-overlay"><h3>Carousel Series</h3><span>Instagram Carousels</span></div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-thumb t4"><span class="thumb-inner">Poster</span></div>
+      <div class="portfolio-overlay"><h3>Event Poster</h3><span>Poster Design</span></div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-thumb t5"><span class="thumb-inner">Campaign</span></div>
+      <div class="portfolio-overlay"><h3>Digital Campaign</h3><span>Brand Campaign</span></div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-thumb t6"><span class="thumb-inner">Typography</span></div>
+      <div class="portfolio-overlay"><h3>Type Exploration</h3><span>Typographic Design</span></div>
+    </div>
+  </div>
+</section>
 
-    <script src="script.js"></script>
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-visual-label">Darshana Deshpande</div>
+  </div>
+  <div class="about-text">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">Designing with <em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--terracotta)">purpose</em> &amp; heart.</h2>
+    <p>Welcome to my graphic design portfolio! I'm Darshana Deshpande, a graphic designer based in India. With a strong eye for aesthetics, branding, and visual storytelling, I create visuals that are not just beautiful — but meaningful and strategic.</p>
+    <p>With hands-on experience in social media creatives, carousel designs, posters, and digital branding, I bring a thoughtful, audience-first approach to every project I take on.</p>
+    <div class="about-edu">
+      <div class="about-edu-label">Education</div>
+      <div class="about-edu-name">SRM Institute of Science and Technology</div>
+      <div class="about-edu-sub">B.Tech, Computer Science &amp; Engineering &nbsp;·&nbsp; 2024</div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-tag">Social Media Design</span>
+      <span class="skill-tag">Branding</span>
+      <span class="skill-tag">Poster Design</span>
+      <span class="skill-tag">Carousel Design</span>
+      <span class="skill-tag">Digital Branding</span>
+      <span class="skill-tag">Adobe Illustrator</span>
+      <span class="skill-tag">Photoshop</span>
+      <span class="skill-tag">Canva</span>
+      <span class="skill-tag">Figma</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What I Offer</div>
+  <h2 class="section-title">Services</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Social Media Creatives</div>
+      <p class="service-desc">Eye-catching posts, stories, reels covers, and graphics designed to stop the scroll and grow your brand's presence online.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Carousel Design</div>
+      <p class="service-desc">Beautifully structured carousel posts for Instagram and LinkedIn that educate, engage, and convert your audience.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Poster &amp; Print Design</div>
+      <p class="service-desc">Event posters, promotional flyers, and print collateral with impactful visuals and clear hierarchy.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-name">Digital Branding</div>
+      <p class="service-desc">Brand kits, colour palettes, typography systems, and visual guidelines that give your brand a cohesive and memorable identity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Journey</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-year">2024 — Present</div>
+      <div>
+        <div class="exp-role">Freelance Graphic Designer</div>
+        <div class="exp-company">REVONE8 HR Consulting Services PVT. LTD., India</div>
+        <p class="exp-desc">Creating social media creatives, carousel designs, digital branding assets, and posters for clients across industries. Focused on visuals that are strategic, aesthetic, and audience-driven.</p>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-year">2020 — 2024</div>
+      <div>
+        <div class="exp-role">B.Tech — Computer Science &amp; Engineering</div>
+        <div class="exp-company">SRM Institute of Science and Technology</div>
+        <p class="exp-desc">Graduated in 2024. Built a strong design foundation alongside a technical education — combining analytical thinking with creative expression in every visual project.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Let's Connect</div>
+  <h2 class="section-title">Get in Touch</h2>
+  <p class="contact-intro">Have a project in mind? I'd love to hear about it.</p>
+  <div class="contact-grid">
+    <div class="contact-text">
+      <p>Whether you need a fresh brand identity, a set of scroll-stopping social creatives, or a beautiful poster — reach out and let's make something great together.</p>
+      <div class="contact-links">
+        <a href="mailto:darshuu142@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          darshuu142@gmail.com
+        </a>
+        <a href="tel:+917350747609" class="contact-link">
+          <span class="contact-link-icon">✆</span>
+          +91 73507 47609
+        </a>
+         <a href="LinkedIn:https://www.linkedin.com/in/darshana-deshpande-775289228/" class="contact-link">
+          <span class="contact-link-icon">[in]</span>
+          https://www.linkedin.com/in/darshana-deshpande-775289228/
+        </a>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-group">
+        <input type="text" placeholder="Your Name" />
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Email Address" />
+      </div>
+      <div class="form-group">
+        <input type="text" placeholder="Project Type (e.g. Social Media, Branding)" />
+      </div>
+      <div class="form-group">
+        <textarea rows="4" placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button class="btn-send">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Darshana Deshpande. All rights reserved.</p>
+  <p>Designed with intention.</p>
+</footer>
+
 </body>
 </html>
